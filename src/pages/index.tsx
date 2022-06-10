@@ -6,9 +6,16 @@ import { useIndex } from "../data/hooks/pages/useIndex";
 
 const Home: NextPage = () => {
   const {
-    listaPets,
-    petSelecionado,
-    setPetSelecionado
+    petList,
+    selectedPet,
+    setSelectedPet,
+    email,
+    setEmail,
+    value,
+    setValue,
+    snackMessage,
+    setSnackMessage,
+    adopt
   } = useIndex();
 
   return (
@@ -23,15 +30,15 @@ const Home: NextPage = () => {
         }
       />
       <List
-        pets={listaPets}
-        onSelect={(pet) => setPetSelecionado(pet)}
+        pets={petList}
+        onSelect={(pet) => setSelectedPet(pet)}
       />
 
       <Dialog 
-      open={petSelecionado !== null} 
+      open={selectedPet !== null} 
       fullWidth
       PaperProps={{sx: { padding: 5}}}
-      onClose={() => setPetSelecionado(null)}
+      onClose={() => setSelectedPet(null)}
       >
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -39,6 +46,8 @@ const Home: NextPage = () => {
               label={'E-mail'}
               type={'email'}
               fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Grid>
           <Grid item xs={12} spacing={2}>
@@ -46,6 +55,8 @@ const Home: NextPage = () => {
               label={'Quantia por mês'}
               type={'number'}
               fullWidth
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
             />
           </ Grid>
 
@@ -54,21 +65,25 @@ const Home: NextPage = () => {
         <DialogActions sx={{marginTop: 5}}>
           <Button
           color={'secondary'}
-          onClick={() => setPetSelecionado(null)}
+          onClick={() => setSelectedPet(null)}
           >
             Cancelar
           </Button>
           <Button
           color={'primary'}
-          variant={'contained'}>
+          variant={'contained'}
+          onClick={() => adopt()}
+          >
             Adotar
           </Button>
         </DialogActions>
       </Dialog>
 
-      <Snackbar 
-      open={false}
-      message={''}
+      <Snackbar  
+        open={snackMessage.length > 0}
+        message={snackMessage}
+        autoHideDuration={2500}
+        onClose={() => setSnackMessage('')}
       />
     </div>
   );
