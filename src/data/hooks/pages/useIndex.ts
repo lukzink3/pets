@@ -17,6 +17,12 @@ export function useIndex(){
         })
     }, [])
 
+    useEffect(() => {
+      if(selectedPet === null){
+        cleanForm();
+      }
+    }, [selectedPet])
+
     function adopt(){
       if(selectedPet !== null){
         if(validAdoptData()){
@@ -28,9 +34,9 @@ export function useIndex(){
             .then(() => {
               setSelectedPet(null);
               setSnackMessage('Pet adotado com sucesso');
-              cleanForm();
+              //cleanForm();
             })
-            .catch((error: AxiosError) => {
+            .catch((error: AxiosError<any>) => {
                     setSnackMessage(error.response?.data.message);
                   })
         }else{
