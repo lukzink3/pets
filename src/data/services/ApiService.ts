@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const ApiService = axios.create({
-    baseURL: 'http://localhost:8000/api',
-    headers: {
-        'Content-Type': 'application/json'
-    }
-})
+  baseURL: process.env.NEXT_APP_API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
